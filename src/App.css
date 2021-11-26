@@ -28,3 +28,19 @@
   background-color: #d9534f;
   border-color: #ac2925;
 }
+
+.highlightSlot {
+  opacity: 1;
+  animation: fade 5s linear;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+

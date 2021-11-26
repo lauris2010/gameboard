@@ -9,7 +9,7 @@ export const GameBoard = ({configuration, result}) => {
             {positions?.map(position => (
                 <button 
                     key={position} 
-                    className={`col-xs-1 btn btn-${colors[position]}`}
+                    className={`${position === result ? 'highlightSlot' : ''} col-xs-1 btn btn-${colors[position]}`}
                 >
                     {position}
                 </button>
