@@ -18,3 +18,8 @@ export const getNextGame = async () => {
     const nextGameResult = await api.get('/nextGame')
     return nextGameResult?.data
 }
+
+export const getSpin = async (nextGameUUID) => {
+    const spinResult = await api.get(`game/${nextGameUUID}`)
+    return spinResult?.data
+}

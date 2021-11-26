@@ -3,6 +3,7 @@ import './App.css';
 import ApiInput from './Components/ApiInput';
 import { GameBoard } from './Components/GameBoard';
 import StatisticsTable from './Components/StatisticsTable';
+import Timer from './Components/Timer';
 import * as modules from './modules'
 
 
@@ -11,6 +12,7 @@ function App() {
   const [loading, setLoading] = React.useState(true)
   const [stats, setStats] = React.useState([])
   const [nextGame, setNextGame] = React.useState({})
+  const [results, setResults] = React.useState([])
 
   
   const getConfiguration = async () => {
@@ -34,6 +36,21 @@ function App() {
     }
   }
 
+  const getGameResult = async () => {
+    setLoading(true)
+    const gameResultData = await modules.getSpin(nextGame.uuid)
+    if(!isNaN(gameResultData?.result)){
+      setResults((previousResults) => [...previousResults, gameResultData])
+      await getStats()
+      await getNextGame()
+      setLoading(false)
+    } else {
+      setTimeout(() => {
+        getGameResult()
+      }, 1000);
+    }
+  }
+
   React.useEffect(() => {
     const FetchData = async () => {
       await getConfiguration()
@@ -53,6 +70,7 @@ function App() {
           <StatisticsTable configuration={configuration} stats={stats}/>
           <div className='col-xs-6'>
             <GameBoard configuration={configuration}/>
+            {nextGame.fakeStartDelta && <Timer key={nextGame.fakeStartDelta} getGameResult={getGameResult} results={results} nextGame={nextGame}/>}
           </div>
       </div>
     </div>
