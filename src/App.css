@@ -1,1 +1,30 @@
 
+.hot {
+  background-color: #f2dede;
+}
+
+.cold {
+  background-color: #d9edf7;
+}
+
+.neutral {
+  background-color: #f5f5f5;  
+}
+
+.btn-black {
+  color: #fff;
+  background-color: #000;
+  border-color: #222;
+}
+
+.btn-green {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+.btn-red {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #ac2925;
+}
