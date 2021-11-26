@@ -13,3 +13,8 @@ export const getStats = async () => {
     const statsResult = await api.get("/stats?limit=200")
     return statsResult?.data
 }
+
+export const getNextGame = async () => {
+    const nextGameResult = await api.get('/nextGame')
+    return nextGameResult?.data
+}
