@@ -1,11 +1,10 @@
 import React from 'react'
 import '../App.css'
 
-
 const StatisticsTable = ({configuration, stats}) => {
     const colors = configuration.colors
     const sortedStats = stats.sort((a,b) => a.count > b.count ? 1 : -1)
-    console.log(colors)
+    
     return (
         <div>
             <table id='stats' className='table'>
@@ -13,7 +12,7 @@ const StatisticsTable = ({configuration, stats}) => {
                     <tr> 
                         <td></td>
                         <th colSpan='5' className='cold'>Cold</th>
-                        <th colSpan='27' className='neutral'>Neutral</th>
+                        <th colSpan={sortedStats.length - 10} className='neutral'>Neutral</th>
                         <th colSpan='5' className='hot'>hot</th>
                     </tr>
                     <tr>

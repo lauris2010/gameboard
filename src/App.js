@@ -6,16 +6,21 @@ import { Loader } from './Components/Loader';
 import Logs from './Components/Logs';
 import StatisticsTable from './Components/StatisticsTable';
 import Timer from './Components/Timer';
-import * as modules from './modules'
+import { Store } from './context/Store';
+import useModules from './modules'
 
 
 function App() {
+  const { state } = React.useContext(Store);
+
   const [configuration, setConfiguration] = React.useState({})
   const [loading, setLoading] = React.useState(true)
   const [stats, setStats] = React.useState([])
   const [nextGame, setNextGame] = React.useState({})
   const [results, setResults] = React.useState([])
   const [logs, setLogs] = React.useState([])
+
+  const modules = useModules();
 
   const addLog = (message) => {
     setLogs((previousLogs) => [...previousLogs, `${new Date().toISOString()} - ${message}`])
@@ -73,7 +78,7 @@ function App() {
       setLoading(false)
     }
     FetchData()
-  }, [])
+  }, [state.baseURL])
 
   return (
     <div className="App">

@@ -1,25 +1,40 @@
+import React from 'react'
 import axios from "axios";
+import { Store } from './context/Store'
 
-const api = axios.create({
-    baseURL: `https://dev-games-backend.advbet.com/v1/ab-roulette/1/`
-})
+const useModules = () => {
+    const { state } = React.useContext(Store);
 
-export const getConfiguration = async () => {
-    const result = await api.get("/configuration")
-    return result?.data
+    const api = axios.create({
+        baseURL: state.baseURL
+    });
+    
+    const getConfiguration = async () => {
+        const result = await api.get("/configuration")
+        return result?.data
+    }
+    
+    const getStats = async () => {
+        const statsResult = await api.get("/stats?limit=200")
+        return statsResult?.data
+    }
+    
+    const getNextGame = async () => {
+        const nextGameResult = await api.get('/nextGame')
+        return nextGameResult?.data
+    }
+    
+    const getSpin = async (nextGameUUID) => {
+        const spinResult = await api.get(`game/${nextGameUUID}`)
+        return spinResult?.data
+    }
+
+    return {
+        getConfiguration,
+        getStats,
+        getNextGame,
+        getSpin
+    };
 }
 
-export const getStats = async () => {
-    const statsResult = await api.get("/stats?limit=200")
-    return statsResult?.data
-}
-
-export const getNextGame = async () => {
-    const nextGameResult = await api.get('/nextGame')
-    return nextGameResult?.data
-}
-
-export const getSpin = async (nextGameUUID) => {
-    const spinResult = await api.get(`game/${nextGameUUID}`)
-    return spinResult?.data
-}
+export default useModules;
