@@ -4,6 +4,7 @@ import '../App.css'
 const StatisticsTable = ({configuration, stats}) => {
     const colors = configuration.colors
     const sortedStats = stats.sort((a,b) => a.count > b.count ? 1 : -1)
+    const results = configuration.results
     
     return (
         <div>
@@ -19,7 +20,7 @@ const StatisticsTable = ({configuration, stats}) => {
                         <th>Slot</th>
                         {
                             sortedStats.map((stat, index) => (
-                                <td key={index} className={`btn-${colors[stat.result]}`}>{stat.result}</td>
+                                <td key={index} className={`btn-${colors[stat.result]}`}>{results[stat.result]}</td>
                             ))
                         }
                     </tr>

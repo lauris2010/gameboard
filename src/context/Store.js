@@ -3,7 +3,7 @@ import React from "react"
 export const Store = React.createContext()
 
 const initialState = {
-    baseURL: `https://dev-games-backend.advbet.com/v1/ab-roulette/1/`
+    baseURL: `https://dev-games-backend.advbet.com/v1/ab-roulette/1`
 }
 
 function reducer(state, action){

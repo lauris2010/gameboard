@@ -16,7 +16,7 @@ const ApiInput = () => {
 
     return (
         <div>
-            <label for="api_base">API base URL</label>
+            <label>API base URL</label>
             <input onChange={handleChange} className="form-control" type="text" value={state.baseURL}></input>
         </div>
     )
