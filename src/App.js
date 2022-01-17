@@ -37,11 +37,15 @@ function App() {
 
   const getNextGame = async () => {
     addLog('GET .../nextGame')
+
     const nextGameData = await modules.getNextGame()
-    if (nextGameData) {
-      setNextGame(nextGameData)
-      addLog(`sleeping for fakeStartDelta ${nextGameData.fakeStartDelta}`)
+
+    if (!nextGameData) {
+      return
     }
+
+    setNextGame(nextGameData)
+    addLog(`sleeping for fakeStartDelta ${nextGameData.fakeStartDelta}`)
   }
 
   const getStats = async () => {
@@ -56,17 +60,22 @@ function App() {
     addLog('Spinning the wheel')
     addLog(`GET .../game/${nextGame.id}`)
     setLoading(true)
+
     const gameResultData = await modules.getSpin(nextGame.uuid)
-    if(!isNaN(gameResultData?.result)){
+
+    if(gameResultData?.result !== null && !isNaN(gameResultData?.result)){
       setResults((previousResults) => [...previousResults, gameResultData])
+
       await getStats()
       await getNextGame()
       setLoading(false)
-    } else {
-      setTimeout(() => {
-        getGameResult()
-      }, 1000);
+
+      return
     }
+
+    setTimeout(() => {
+      getGameResult()
+    }, 1000);
   }
 
   React.useEffect(() => {
@@ -78,6 +87,7 @@ function App() {
       setLoading(false)
     }
     FetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.baseURL])
 
   return (
@@ -89,7 +99,7 @@ function App() {
           <StatisticsTable configuration={configuration} stats={stats}/>
           <div className='col-xs-6'>
             <GameBoard configuration={configuration} result={results[results.length-1]?.result}/>
-            {nextGame.fakeStartDelta && <Timer key={nextGame.fakeStartDelta} getGameResult={getGameResult} results={results} nextGame={nextGame}/>}
+            <Timer key={nextGame.id} getGameResult={getGameResult} results={results} nextGame={nextGame}/>
           </div>
           <div className='col-xs-6'>
             <Logs logs={logs}/>
